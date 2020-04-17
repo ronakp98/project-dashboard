@@ -32,8 +32,6 @@ trace2_stackbarchart = go.Bar(x=stackbarchart_df['Year'], y=stackbarchart_df['Wa
 marker={'color': '#9EA0A1'})
 data_stackbarchart = [trace1_stackbarchart, trace2_stackbarchart]
 
-#CD7F32
-
 # Line Chart
 line_df = df6
 line_df['date'] = pd.to_datetime(line_df['date'])
@@ -59,12 +57,11 @@ data_bubblechart = [
                mode='markers',
                marker=dict(size=new_df['Unemployment rate'] * 10,color=new_df['Unemployment rate'], showscale=False))]
 
-
 # Heatmap
-#data_heatmap = [go.Heatmap(x=df4['day'],
-#                   y=df4['month'],
-#                   z=df4['actual_max_temp'].values.tolist(),
-#                   colorscale='Jet')]
+data_heatmap = [go.Heatmap(x=df4['day'],
+                   y=df4['Year'],
+                   z=df4['actual_max_temp'].values.tolist(),
+                   colorscale='Jet')]
 
 
 
