@@ -89,8 +89,8 @@ app.layout = html.Div(children=[
     dcc.Graph(id='graph3',
               figure={
                   'data': data_stackbarchart,
-                  'layout': go.Layout(title='Total Olympic Medals', xaxis_title="Country",
-                    yaxis_title="Number of Medals", barmode='stack')
+                  'layout': go.Layout(title='Fatal Work Injuries', xaxis_title="Year",
+                    yaxis_title="Number of Injuries", barmode='stack')
               }
               ),
     html.Hr(style={'color': '#7FDBFF'}),
