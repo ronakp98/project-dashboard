@@ -58,7 +58,6 @@ data_bubblechart = [
                mode='markers',
                marker=dict(size=new_df['Unemployment rate'] * 10,color=new_df['Unemployment rate'], showscale=False))]
 
-#This Comment was not on your version!!!!!
 
 # Heatmap
 data_heatmap = [go.Heatmap(x=df4['day'],
