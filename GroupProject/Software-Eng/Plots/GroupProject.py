@@ -59,7 +59,7 @@ data_bubblechart = [
 
 # Heatmap
 data_heatmap = [go.Heatmap(x=df9['Month'],
-                   y=df9['Date'],
+                   y=df9['Year'],
                    z=df9['Rate'].values.tolist(),
                    colorscale='Jet')]
 
