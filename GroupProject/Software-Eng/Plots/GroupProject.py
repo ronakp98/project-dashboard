@@ -14,7 +14,7 @@ df5 = pd.read_csv('../Datasets/duration-of-unemployment.csv')
 df6 = pd.read_csv('../Datasets/15yUnemployment.csv')
 df7 = pd.read_csv('../Datasets/US-UnemployedbyState.csv')
 df8 = pd.read_csv('../Datasets/fatalwork-injuries.csv')
-df9 = pd.read_csv('../Datasets/laborparticipationrate.csv')
+df9 = pd.read_csv('../Datasets/laborparticipationrate2.csv')
 
 app = dash.Dash()
 
@@ -58,12 +58,10 @@ data_bubblechart = [
                marker=dict(size=new_df['Unemployment rate'] * 10,color=new_df['Unemployment rate'], showscale=False))]
 
 # Heatmap
-data_heatmap = [go.Heatmap(x=df4['day'],
-                   y=df4['Year'],
-                   z=df4['actual_max_temp'].values.tolist(),
+data_heatmap = [go.Heatmap(x=df9['Month'],
+                   y=df9['Date'],
+                   z=df9['Rate'].values.tolist(),
                    colorscale='Jet')]
-
-
 
 # Layout
 app.layout = html.Div(children=[
