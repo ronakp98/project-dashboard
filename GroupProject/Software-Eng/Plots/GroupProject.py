@@ -14,6 +14,7 @@ df5 = pd.read_csv('../Datasets/duration-of-unemployment.csv')
 df6 = pd.read_csv('../Datasets/15yUnemployment.csv')
 df7 = pd.read_csv('../Datasets/US-UnemployedbyState.csv')
 df8 = pd.read_csv('../Datasets/fatalwork-injuries.csv')
+df9 = pd.read_csv('../Datasets/laborparticipationrate.csv')
 
 app = dash.Dash()
 
@@ -60,10 +61,12 @@ data_bubblechart = [
 
 
 # Heatmap
-data_heatmap = [go.Heatmap(x=df4['day'],
-                   y=df4['month'],
-                   z=df4['actual_max_temp'].values.tolist(),
-                   colorscale='Jet')]
+#data_heatmap = [go.Heatmap(x=df4['day'],
+#                   y=df4['month'],
+#                   z=df4['actual_max_temp'].values.tolist(),
+#                   colorscale='Jet')]
+
+
 
 # Layout
 app.layout = html.Div(children=[
@@ -131,7 +134,7 @@ html.Div(
     html.Hr(style={'color': '#7FDBFF'}),
     html.H3('Heat map', style={'color': '#df1e56'}),
     html.Div(
-        'This heat map represent the recorded max temperature on day of week and month of year.'),
+        'This heat map represent the labor paticipation rate in the US by month since 2010.'),
     dcc.Graph(id='graph7',
               figure={
                   'data': data_heatmap,
