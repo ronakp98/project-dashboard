@@ -61,7 +61,8 @@ data_bubblechart = [
 data_heatmap = [go.Heatmap(x=df9['Month'],
                    y=df9['Year'],
                    z=df9['Rate'].values.tolist(),
-                   colorscale='Jet')]
+                   colorscale='Jet',
+                   reversescale=True)]
 
 # Layout
 app.layout = html.Div(children=[
@@ -129,7 +130,7 @@ html.Div(
     html.Hr(style={'color': '#7FDBFF'}),
     html.H3('Heat map', style={'color': '#df1e56'}),
     html.Div(
-        'This heat map represent the labor paticipation rate in the US by month since 2010.'),
+        'This heat map represent the labor participation rate in the US by month since 2010.'),
     dcc.Graph(id='graph7',
               figure={
                   'data': data_heatmap,
