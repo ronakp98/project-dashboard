@@ -13,6 +13,7 @@ df4 = pd.read_csv('../Datasets/Weather2014-15.csv')
 df5 = pd.read_csv('../Datasets/duration-of-unemployment.csv')
 df6 = pd.read_csv('../Datasets/15yUnemployment.csv')
 df7 = pd.read_csv('../Datasets/US-UnemployedbyState.csv')
+df8 = pd.read_csv('../Datasets/fatalwork-injuries.csv')
 
 app = dash.Dash()
 
@@ -22,16 +23,15 @@ barchart_df = barchart_df.sort_values(by=['State'], ascending=[True]).head(50)
 data_barchart = [go.Bar(x=barchart_df['State'], y=barchart_df['Unemployment rate'])]
 
 # Stack bar chart data
-stackbarchart_df = df3.groupby(['NOC']).agg({'Gold': 'sum', 'Silver': 'sum', 'Bronze':
-'sum'})
-stackbarchart_df = df3.sort_values(by=['Total'], ascending=[False]).head(20)
-trace1_stackbarchart = go.Bar(x=stackbarchart_df['NOC'], y=stackbarchart_df['Gold'], name='Gold',
+stackbarchart_df = df8.groupby(['Year']).agg({'Self-employed': 'sum', 'Wage and salary': 'sum'})
+stackbarchart_df = df8.sort_values(by=['Total'], ascending=[False]).head(20)
+trace1_stackbarchart = go.Bar(x=stackbarchart_df['Year'], y=stackbarchart_df['Self-employed'], name='Self-employed',
 marker={'color': '#FFD700'})
-trace2_stackbarchart = go.Bar(x=stackbarchart_df['NOC'], y=stackbarchart_df['Silver'], name='Silver',
+trace2_stackbarchart = go.Bar(x=stackbarchart_df['Year'], y=stackbarchart_df['Wage and salary'], name='Wage and salary',
 marker={'color': '#9EA0A1'})
-trace3_stackbarchart = trace3 = go.Bar(x=stackbarchart_df['NOC'], y=stackbarchart_df['Bronze'], name='Bronze',
-marker={'color': '#CD7F32'})
-data_stackbarchart = [trace1_stackbarchart, trace2_stackbarchart, trace3_stackbarchart]
+data_stackbarchart = [trace1_stackbarchart, trace2_stackbarchart]
+
+#CD7F32
 
 # Line Chart
 line_df = df6
@@ -87,7 +87,7 @@ app.layout = html.Div(children=[
     html.Hr(style={'color': '#7FDBFF'}),
     html.H3('Stack bar chart', style={'color': '#df1e56'}),
     html.Div(
-        'This stack bar chart represent the Gold, Silver, Bronze medals of Olympic 2016 of 20 first top countries.'),
+        'This stack bar chart represent the Self-employed, Wage and salary, Bronze medals of Olympic 2016 of 20 first top countries.'),
     dcc.Graph(id='graph3',
               figure={
                   'data': data_stackbarchart,
