@@ -133,8 +133,8 @@ html.Div(
     dcc.Graph(id='graph7',
               figure={
                   'data': data_heatmap,
-                  'layout': go.Layout(title='Max Temperature on Day of Week and Month of Year',
-                                      xaxis={'title': 'Day of Week'}, yaxis={'title': 'Month'})
+                  'layout': go.Layout(title='Labor participation rate by Month since 2010',
+                                      xaxis={'title': 'Month'}, yaxis={'title': 'Year'})
               }
               )
 ])
