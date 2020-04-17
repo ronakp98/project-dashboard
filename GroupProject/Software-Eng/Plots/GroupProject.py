@@ -48,16 +48,15 @@ trace4 = go.Scatter(x=multiline_df['date'], y=multiline_df['27 weeks and over'],
 data_multiline = [trace1, trace2, trace3, trace4]
 
 # Bubble chart
-new_df = df4.groupby(['month']).agg({'average_min_temp': 'mean', 'average_max_temp': 'mean'}).reset_index()
-new_df['MonthIndex'] = pd.to_datetime(new_df['month'], format='%B', errors='coerce').dt.month
-new_df = new_df.sort_values(by="MonthIndex")
+new_df = df7.groupby(['State']).agg({'Unemployment rate': 'sum', 'Number of unemployed': 'sum'}).reset_index()
+new_df = new_df.sort_values(by=['State'], ascending=[True]).head(50)
 # Preparing data
 data_bubblechart = [
-    go.Scatter(x=new_df['month'],
-               y=new_df['average_max_temp'],
-               text=new_df['month'],
+    go.Scatter(x=new_df['Unemployment rate'],
+               y=new_df['Number of unemployed'],
+               text=new_df['State'],
                mode='markers',
-               marker=dict(size=new_df['average_min_temp'],color=new_df['average_max_temp'], showscale=True))]
+               marker=dict(size=new_df['Unemployment rate'],color=[0,1,2,3], showscale=False))]
 
 # Heatmap
 data_heatmap = [go.Heatmap(x=df4['day'],
@@ -87,7 +86,7 @@ app.layout = html.Div(children=[
     html.Hr(style={'color': '#7FDBFF'}),
     html.H3('Stack bar chart', style={'color': '#df1e56'}),
     html.Div(
-        'This stack bar chart represent the Self-employed, Wage and salary, Bronze medals of Olympic 2016 of 20 first top countries.'),
+        'This stack bar chart represent the fatal work injuries for Self-employed / Wage and salary employees from 2014 to 2018.'),
     dcc.Graph(id='graph3',
               figure={
                   'data': data_stackbarchart,
@@ -118,11 +117,13 @@ app.layout = html.Div(children=[
               ),
     html.Hr(style={'color': '#7FDBFF'}),
     html.H3('Bubble chart', style={'color': '#df1e56'}),
+html.Div(
+        'This bubble chart represent the unemployment rate by state and number of unemployed'),
     dcc.Graph(id='graph6',
               figure={
                   'data': data_bubblechart,
-                  'layout': go.Layout(title='Monthly Temps',
-                                      xaxis={'title': 'Month'}, yaxis={'title': 'Temp'},
+                  'layout': go.Layout(title='US Unemployment Rate',
+                                      xaxis={'title': 'Unemployment Rate'}, yaxis={'title': 'Number of unemployed'},
                                       hovermode='closest')
               }
               ),
