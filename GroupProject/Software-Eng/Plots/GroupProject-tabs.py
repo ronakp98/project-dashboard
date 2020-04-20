@@ -96,8 +96,7 @@ app.layout = html.Div([
 def render_content(tab):
     if tab == 'tab-1':
         return html.Div([
-            html.H2('Bar chart', style={'color': '#df1e56', 'textAlign': 'center'}),
-            html.Div('This bar chart represents the Unemployment Rate by each State.', style={'textAlign': 'center'}),
+            html.H3('This bar chart represents the Unemployment Rate by each State.', style={'textAlign': 'center'}),
             dcc.Graph(id='graph2',
                       figure={
                           'data': data_barchart,
@@ -109,8 +108,7 @@ def render_content(tab):
 
     elif tab == 'tab-2':
         return html.Div([
-            html.H2('Stack bar chart', style={'color': '#df1e56', 'textAlign': 'center'}),
-            html.Div(
+            html.H3(
                 'This stack bar chart represent the fatal work injuries for Self-employed / Wage and salary employees from 2014 to 2018.',
                 style={'textAlign': 'center'}),
             dcc.Graph(id='graph3',
@@ -124,8 +122,7 @@ def render_content(tab):
 
     elif tab == 'tab-3':
         return html.Div([
-            html.H2('Line chart', style={'color': '#df1e56', 'textAlign': 'center'}),
-            html.Div('This line chart represent the unemployment rate of the United States over a 15 year period.',
+            html.H3('This line chart represent the unemployment rate of the United States over a 15 year period.',
                      style={'textAlign': 'center'}),
             dcc.Graph(id='graph4',
                       figure={
@@ -138,8 +135,7 @@ def render_content(tab):
 
     elif tab == 'tab-4':
         return html.Div([
-            html.H2('Multi Line chart', style={'color': '#df1e56', 'textAlign': 'center'}),
-            html.Div(
+            html.H3(
                 'This line chart represent the the different lengths of unemployment over the course of 20 years',
                 style={'textAlign': 'center'}),
             dcc.Graph(id='graph5',
@@ -153,8 +149,7 @@ def render_content(tab):
 
     elif tab == 'tab-5':
         return html.Div([
-            html.H2('Bubble chart', style={'color': '#df1e56', 'textAlign': 'center'}),
-            html.Div(
+            html.H3(
                 'This bubble chart represent the unemployment rate by state and number of unemployed',
                 style={'textAlign': 'center'}),
             dcc.Graph(id='graph6',
@@ -170,8 +165,7 @@ def render_content(tab):
 
     elif tab == 'tab-6':
         return html.Div([
-            html.H2('Heat map', style={'color': '#df1e56', 'textAlign': 'center'}),
-            html.Div(
+            html.H3(
                 'This heat map represent the labor participation rate in the US by month since 2010.',
                 style={'textAlign': 'center'}),
             dcc.Graph(id='graph7',
