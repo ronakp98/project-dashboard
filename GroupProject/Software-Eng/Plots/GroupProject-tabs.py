@@ -18,6 +18,7 @@ df6 = pd.read_csv('../Datasets/15yUnemployment.csv')
 df7 = pd.read_csv('../Datasets/US-UnemployedbyState.csv')
 df8 = pd.read_csv('../Datasets/fatalwork-injuries.csv')
 df9 = pd.read_csv('../Datasets/laborparticipationrate2.csv')
+df10 = pd.read_csv('../Datasets/UnemploymentData.csv')
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
@@ -48,6 +49,24 @@ trace2 = go.Scatter(x=multiline_df['date'], y=multiline_df['5-14 weeks'], mode='
 trace3 = go.Scatter(x=multiline_df['date'], y=multiline_df['15-26 weeks'], mode='lines', name='15-26 weeks')
 trace4 = go.Scatter(x=multiline_df['date'], y=multiline_df['27 weeks and over'], mode='lines', name='> 26 weeks')
 data_multiline = [trace1, trace2, trace3, trace4]
+
+multiline_df2 = df10
+multiline_df2['date'] = pd.to_datetime(multiline_df['date'])
+trace1 = go.Scatter(x=multiline_df['date'], y=multiline_df2['Unemployment Rate - 16 & Up'], mode='lines', name='16 & UP')
+trace2 = go.Scatter(x=multiline_df['date'], y=multiline_df2['Unemployment Rate - 16-19'], mode='lines', name='Ages 16-19')
+trace3 = go.Scatter(x=multiline_df['date'], y=multiline_df2['Unemployment Rate - 20 & Up Men'], mode='lines', name='20 & UP Men')
+trace4 = go.Scatter(x=multiline_df['date'], y=multiline_df2['Unemployment Rate - 20 & Up Women'], mode='lines', name='20 & UP Women')
+trace5 = go.Scatter(x=multiline_df['date'], y=multiline_df2['Unemployment Rate - 16 & Up White'], mode='lines', name='16 & UP White')
+trace6 = go.Scatter(x=multiline_df['date'], y=multiline_df2['Unemployment Rate - 16 & African American'], mode='lines', name='16 & UP African American')
+trace7 = go.Scatter(x=multiline_df['date'], y=multiline_df2['Unemployment Rate - 16 & Asians'], mode='lines', name='16 & UP Asians')
+trace8 = go.Scatter(x=multiline_df['date'], y=multiline_df2['Unemployment Rate - 16 & Latino/Hispanic'], mode='lines', name='16 & UP Latino/Hispanic')
+trace9 = go.Scatter(x=multiline_df['date'], y=multiline_df2['Unemployment Rate - 25 & Up Less than a high school diploma'], mode='lines', name='> High School Diploma')
+trace10 = go.Scatter(x=multiline_df['date'], y=multiline_df2['Unemployment Rate - 25 & Up No College'], mode='lines', name='No College')
+trace11 = go.Scatter(x=multiline_df['date'], y=multiline_df2['Unemployment Rate - 25 & Up Associates Degree'], mode='lines', name='> Associates Degree')
+trace12 = go.Scatter(x=multiline_df['date'], y=multiline_df2['Unemployment Rate - 25 & Up Bachelors Degree or Higher'], mode='lines', name='Bachelors and UP')
+
+
+data_multiline2 = [trace1, trace2, trace3, trace4, trace5, trace6, trace7, trace8, trace9, trace10, trace11, trace12]
 
 # Bubble chart
 new_df = df7.groupby(['State']).agg({'Unemployment rate': 'sum', 'Number of unemployed': 'sum'}).reset_index()
@@ -143,6 +162,13 @@ def render_content(tab):
                           'data': data_multiline,
                           'layout': go.Layout(title="Duration of Unemployment", xaxis_title="Date",
                                               yaxis_title="Unemployed Individuals")
+                      }
+                      ),
+            dcc.Graph(id='graph8',
+                      figure={
+                          'data': data_multiline2,
+                          'layout': go.Layout(title="Unemployment Statistics", xaxis_title="Date",
+                                              yaxis_title="Unemployment Rate")
                       }
                       )
         ])
