@@ -167,7 +167,7 @@ def render_content(tab):
     elif tab == 'tab-4':
         return html.Div([
             html.H3(
-                'This line chart represent the the different lengths of unemployment over the course of 20 years',
+                'This line chart represents the different lengths of unemployment over the course of 20 years',
                 style={'textAlign': 'center'}),
             dcc.Graph(id='graph5',
                       figure={
@@ -176,6 +176,9 @@ def render_content(tab):
                                               yaxis_title="Unemployed Individuals")
                       }
                       ),
+            html.H3(
+                'This line chart represents the demographic of unemployment over the course of 20 years',
+                style={'textAlign': 'center'}),
             dcc.Graph(id='graph8',
                       figure={
                           'data': data_multiline2,
