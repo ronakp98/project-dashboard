@@ -19,6 +19,7 @@ df7 = pd.read_csv('../Datasets/US-UnemployedbyState.csv')
 df8 = pd.read_csv('../Datasets/fatalwork-injuries.csv')
 df9 = pd.read_csv('../Datasets/laborparticipationrate2.csv')
 df10 = pd.read_csv('../Datasets/UnemploymentData.csv')
+df11 = pd.read_csv('../Datasets/laborparticipationrate.csv')
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
@@ -40,6 +41,10 @@ data_stackbarchart = [trace1_stackbarchart, trace2_stackbarchart]
 line_df = df6
 line_df['date'] = pd.to_datetime(line_df['date'])
 data_linechart = [go.Scatter(x=line_df['date'], y=line_df['Percentage'], mode='lines', name='Max')]
+
+line_df2 = df11
+line_df2['date'] = pd.to_datetime(line_df2['date'])
+data_linechart2 = [go.Scatter(x=line_df2['date'], y=line_df2['Rate'], mode='lines', name='Max')]
 
 # Multi Line Chart
 multiline_df = df5
@@ -64,8 +69,6 @@ trace9 = go.Scatter(x=multiline_df['date'], y=multiline_df2['Unemployment Rate -
 trace10 = go.Scatter(x=multiline_df['date'], y=multiline_df2['Unemployment Rate - 25 & Up No College'], mode='lines', name='No College')
 trace11 = go.Scatter(x=multiline_df['date'], y=multiline_df2['Unemployment Rate - 25 & Up Associates Degree'], mode='lines', name='> Associates Degree')
 trace12 = go.Scatter(x=multiline_df['date'], y=multiline_df2['Unemployment Rate - 25 & Up Bachelors Degree or Higher'], mode='lines', name='Bachelors and UP')
-
-
 data_multiline2 = [trace1, trace2, trace3, trace4, trace5, trace6, trace7, trace8, trace9, trace10, trace11, trace12]
 
 # Bubble chart
@@ -148,6 +151,15 @@ def render_content(tab):
                           'data': data_linechart,
                           'layout': go.Layout(title='United States Unemployment Rates', xaxis_title="Month / Year",
                                               yaxis_title="Unemployment Rate")
+                      }
+                      ),
+            html.H3('This line chart represent the labor participation rate of the United States over a 10 year period.',
+                    style={'textAlign': 'center'}),
+            dcc.Graph(id='graph9',
+                      figure={
+                          'data': data_linechart2,
+                          'layout': go.Layout(title='United States Labor Participation', xaxis_title="Month / Year",
+                                              yaxis_title="Labor Participation Rate")
                       }
                       )
         ])
