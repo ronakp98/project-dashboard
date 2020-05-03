@@ -9,10 +9,6 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 
 # Load CSV file from Datasets folder
-df1 = pd.read_csv('../Datasets/CoronavirusTotal.csv')
-df2 = pd.read_csv('../Datasets/CoronaTimeSeries.csv')
-df3 = pd.read_csv('../Datasets/Olympic2016Rio.csv')
-df4 = pd.read_csv('../Datasets/Weather2014-15.csv')
 df5 = pd.read_csv('../Datasets/duration-of-unemployment.csv')
 df6 = pd.read_csv('../Datasets/15yUnemployment.csv')
 df7 = pd.read_csv('../Datasets/US-UnemployedbyState.csv')
@@ -20,6 +16,9 @@ df8 = pd.read_csv('../Datasets/fatalwork-injuries.csv')
 df9 = pd.read_csv('../Datasets/laborparticipationrate2.csv')
 df10 = pd.read_csv('../Datasets/UnemploymentData.csv')
 df11 = pd.read_csv('../Datasets/laborparticipationrate.csv')
+df12 = pd.read_csv('../Datasets/unemploymentnumsbymonth.csv')
+df13 = pd.read_csv('../Datasets/unemployedbyindustry.csv')
+df14 = pd.read_csv('../Datasets/laborparticipationbygender.csv')
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
@@ -28,14 +27,22 @@ barchart_df = df7
 barchart_df = barchart_df.sort_values(by=['State'], ascending=[True]).head(50)
 data_barchart = [go.Bar(x=barchart_df['State'], y=barchart_df['Unemployment rate'])]
 
+barchart_df2 = df13
+barchart_df2 = barchart_df2.sort_values(by=['Industry and Class of Worker'], ascending=[True]).head(14)
+data_barchart2 = [go.Bar(x=barchart_df2["Industry and Class of Worker"], y=barchart_df2['Number'])]
+
 # Stack bar chart data
-stackbarchart_df = df8.groupby(['Year']).agg({'Self-employed': 'sum', 'Wage and salary': 'sum'})
 stackbarchart_df = df8.sort_values(by=['Total'], ascending=[False]).head(20)
 trace1_stackbarchart = go.Bar(x=stackbarchart_df['Year'], y=stackbarchart_df['Self-employed'], name='Self-employed',
 marker={'color': '#FFD700'})
 trace2_stackbarchart = go.Bar(x=stackbarchart_df['Year'], y=stackbarchart_df['Wage and salary'], name='Wage and salary',
 marker={'color': '#9EA0A1'})
 data_stackbarchart = [trace1_stackbarchart, trace2_stackbarchart]
+
+stackbarchart_df2 = df14.sort_values(by=['Total'], ascending=[False]).head(20)
+trace3_stackbarchart = go.Bar(x=stackbarchart_df2['Year'], y=stackbarchart_df2['Men'], name='Men', marker={'color': '#FFD700'})
+trace4_stackbarchart = go.Bar(x=stackbarchart_df2['Year'], y=stackbarchart_df2['Women'], name='Women', marker={'color': '#9EA0A1'})
+data_stackbarchart2 = [trace3_stackbarchart, trace4_stackbarchart]
 
 # Line Chart
 line_df = df6
@@ -75,6 +82,9 @@ data_multiline2 = [trace1, trace2, trace3, trace4, trace5, trace6, trace7, trace
 new_df = df7.groupby(['State']).agg({'Unemployment rate': 'sum', 'Number of unemployed': 'sum'}).reset_index()
 new_df = new_df.sort_values(by=['State'], ascending=[True]).head(50)
 
+bubble_df = df13.groupby(['Industry and Class of Worker']).agg({'Rate': 'sum', 'Number': 'sum'}).reset_index()
+bubble_df = bubble_df.sort_values(by=['Industry and Class of Worker'], ascending=[True]).head(14)
+
 # Preparing data
 data_bubblechart = [
     go.Scatter(x=new_df['Unemployment rate'],
@@ -83,12 +93,25 @@ data_bubblechart = [
                mode='markers',
                marker=dict(size=new_df['Unemployment rate'] * 10,color=new_df['Unemployment rate'], showscale=False))]
 
+data_bubblechart2 = [
+    go.Scatter(x=bubble_df['Rate'],
+               y=bubble_df['Number'],
+               text=bubble_df['Industry and Class of Worker'],
+               mode='markers',
+               marker=dict(size=bubble_df['Rate'] * 10, color=bubble_df['Rate'], showscale=False))]
+
 # Heatmap
 data_heatmap = [go.Heatmap(x=df9['Month'],
                    y=df9['Year'],
                    z=df9['Rate'].values.tolist(),
                    colorscale='Jet',
                    reversescale=True)]
+
+data_heatmap2 = [go.Heatmap(x=df12['Month'],
+                 y=df12['Year'],
+                 z=df12['Number'].values.tolist(),
+                 colorscale='Jet',
+                 reversescale=True)]
 
 app.layout = html.Div([
 
@@ -125,6 +148,18 @@ def render_content(tab):
                           'layout': go.Layout(title='Unemployment Rate By State', xaxis_title="State",
                                               yaxis_title="Unemployment Rate")
                       }
+                      ),
+            html.H3('This bar chart represents the Unemployment Numbers \nby each industry and class of worker.', style={'textAlign': 'center'}),
+            dcc.Graph(id='graph11',
+                      style={
+                          'height': 800
+                      },
+                      figure={
+                          'data': data_barchart2,
+                          'layout': go.Layout(title='Unemployment Numbers by Industry', xaxis_title="Industry",
+                                              yaxis_title="Unemployment Number in Thousands",
+                                              margin=dict(b=370), xaxis=dict(tickangle=90))
+                      }
                       )
         ])
 
@@ -138,6 +173,16 @@ def render_content(tab):
                           'data': data_stackbarchart,
                           'layout': go.Layout(title='Fatal Work Injuries', xaxis_title="Year",
                                               yaxis_title="Number of Injuries", barmode='stack')
+                      }
+                      ),
+            html.H3(
+                'This stack bar chart represent the Unemployment rate for Men and Women over four decades\nand predicitons for the future decade',
+                style={'textAlign': 'center'}),
+            dcc.Graph(id='graph13',
+                      figure={
+                          'data': data_stackbarchart2,
+                          'layout': go.Layout(title='Unemployment Rate by Decades', xaxis_title="Year",
+                                              yaxis_title="Unemployment Rate", barmode='stack')
                       }
                       )
         ])
@@ -162,6 +207,7 @@ def render_content(tab):
                                               yaxis_title="Labor Participation Rate")
                       }
                       )
+
         ])
 
     elif tab == 'tab-4':
@@ -201,6 +247,18 @@ def render_content(tab):
                                               yaxis={'title': 'Number of unemployed'},
                                               hovermode='closest')
                       }
+                      ),
+            html.H3(
+                'This bubble chart represent the unemployment rate by industry and number of unemployed',
+                style={'textAlign': 'center'}),
+            dcc.Graph(id='graph12',
+                      figure={
+                          'data': data_bubblechart2,
+                          'layout': go.Layout(title='US Unemployment Rate by Industry',
+                                              xaxis={'title': 'Unemployment Rate'},
+                                              yaxis={'title': 'Number of Unemployed'},
+                                              hovermode='closest')
+                      }
                       )
         ])
 
@@ -215,20 +273,18 @@ def render_content(tab):
                           'layout': go.Layout(title='Labor participation rate by Month since 2010',
                                               xaxis={'title': 'Month'}, yaxis={'title': 'Year'})
                       }
+                      ),
+            html.H3(
+                'This heat map represent the unemployment number in the US by month since 2010.',
+                style={'textAlign': 'center'}),
+            dcc.Graph(id='graph10',
+                      figure={
+                          'data': data_heatmap2,
+                          'layout': go.Layout(title='Umemployment numbers by Month in thousands',
+                                              xaxis={'title': 'Month'}, yaxis={'title': 'Year'})
+                      }
                       )
         ])
-
-def update_figure(selected_continent):
-    filtered_df = df1[df1['Continent'] == selected_continent]
-
-    filtered_df = filtered_df.apply(lambda x: x.str.strip() if x.dtype == "object" else x)
-    new_df = filtered_df.groupby(['Country'])['Confirmed'].sum().reset_index()
-    new_df = new_df.sort_values(by=['Confirmed'], ascending=[False]).head(20)
-    data_interactive_barchart = [go.Bar(x=new_df['Country'], y=new_df['Confirmed'])]
-    return {'data': data_interactive_barchart, 'layout': go.Layout(title='Corona Virus Confirmed Cases in '+selected_continent,
-                                                                   xaxis={'title': 'Country'},
-                                                                   yaxis={'title': 'Number of confirmed cases'})}
-
 
 if __name__ == '__main__':
     app.run_server()
