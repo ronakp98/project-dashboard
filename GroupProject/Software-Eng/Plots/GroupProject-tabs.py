@@ -149,6 +149,8 @@ def render_content(tab):
                                               yaxis_title="Unemployment Rate")
                       }
                       ),
+            html.Hr(style={'color': '#7FDBFF'}),
+
             html.H3('This bar chart represents the Unemployment Numbers \nby each industry and class of worker.', style={'textAlign': 'center'}),
             dcc.Graph(id='graph11',
                       style={
@@ -175,6 +177,9 @@ def render_content(tab):
                                               yaxis_title="Number of Injuries", barmode='stack')
                       }
                       ),
+
+            html.Hr(style={'color': '#7FDBFF'}),
+
             html.H3(
                 'This stack bar chart represent the Unemployment rate for Men and Women over four decades\nand predicitons for the future decade',
                 style={'textAlign': 'center'}),
@@ -198,6 +203,9 @@ def render_content(tab):
                                               yaxis_title="Unemployment Rate")
                       }
                       ),
+
+            html.Hr(style={'color': '#7FDBFF'}),
+
             html.H3('This line chart represent the labor participation rate of the United States over a 10 year period.',
                     style={'textAlign': 'center'}),
             dcc.Graph(id='graph9',
@@ -222,6 +230,9 @@ def render_content(tab):
                                               yaxis_title="Unemployed Individuals")
                       }
                       ),
+
+            html.Hr(style={'color': '#7FDBFF'}),
+
             html.H3(
                 'This line chart represents the demographic of unemployment over the course of 20 years',
                 style={'textAlign': 'center'}),
@@ -248,6 +259,9 @@ def render_content(tab):
                                               hovermode='closest')
                       }
                       ),
+
+            html.Hr(style={'color': '#7FDBFF'}),
+
             html.H3(
                 'This bubble chart represent the unemployment rate by industry and number of unemployed',
                 style={'textAlign': 'center'}),
@@ -274,6 +288,9 @@ def render_content(tab):
                                               xaxis={'title': 'Month'}, yaxis={'title': 'Year'})
                       }
                       ),
+
+            html.Hr(style={'color': '#7FDBFF'}),
+
             html.H3(
                 'This heat map represent the unemployment number in the US by month since 2010.',
                 style={'textAlign': 'center'}),
