@@ -179,14 +179,14 @@ ct.update_layout(
 # .......................................................................................................................
 app.layout = html.Div([
 
-    html.H1(children='Python Dash',
+    html.H1(children='Covid-19 Economic Impact Dashboard',
             style={
                 'textAlign': 'center',
                 'color': '#ef3e18'
             }
             ),
 
-    html.Div('Web dashboard for Data Visualization using Python', style={'textAlign': 'center'}),
+    html.Div('Web dashboard created by Group 3, ITSC-3155', style={'textAlign': 'center'}),
     html.Hr(style={'color': '#7FDBFF'}),
 
     dcc.Tabs(id='tabs-example', value='tab-1', children=[
@@ -248,13 +248,13 @@ def render_content(tab):
             html.Hr(style={'color': '#7FDBFF'}),
 
             html.H3(
-                'This stack bar chart represent the Unemployment rate for Men and Women over four decades\nand predicitons for the future decade',
+                'This stack bar chart represent the Labor participation rate for Men and Women over four decades\nand predicitons for the future decade',
                 style={'textAlign': 'center'}),
             dcc.Graph(id='graph13',
                       figure={
                           'data': data_stackbarchart2,
-                          'layout': go.Layout(title='Unemployment Rate by Decades', xaxis_title="Year",
-                                              yaxis_title="Unemployment Rate", barmode='stack')
+                          'layout': go.Layout(title='Labor Participation Rate by Decades', xaxis_title="Year",
+                                              yaxis_title="Labor Participation Rate", barmode='stack')
                       }
                       )
         ])
